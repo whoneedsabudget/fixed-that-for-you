@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "fixed-that-for-you"
+version = "1.0.0"
+description = ""
+authors = ["synth3tk <dev@synth3.tk>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+main = "main:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+discord-py-interactions = "5.0.0"
+discord-typings = "0.5.1"
+python-dotenv = "0.19.1"
+requests = "^2.31.0"
+tldextract = "^3.4.4"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+jurigged = "^0.5.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

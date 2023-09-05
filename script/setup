@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# script/setup: Set up application for the first time after cloning, or set it
+#               back to the initial first unused state.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+script/bootstrap
+
+echo -e "\n=> Starting script/setup"
+
+if [[ -z $ENVIRONMENT || "$ENVIRONMENT" = development ]]; then
+  ENVFILE=.env
+  if ! [ -f "$ENVFILE" ]; then
+    echo -e "\n==> Creating blank .env file..."
+    cp .env.template .env
+  fi
+fi
+
+echo -e "\n==> Finished script/setup\n"

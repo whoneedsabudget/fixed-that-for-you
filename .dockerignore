@@ -1,5 +1,6 @@
 .env.template
 .git
+.github
 .gitignore
 
 .vscode/

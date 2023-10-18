@@ -32,4 +32,3 @@ jobs:
         push: true
         tags: |
           ghcr.io/whoneedsabudget/ftfybot:latest
-          ghcr.io/whoneedsabudget/ftfybot:$(date +%s)

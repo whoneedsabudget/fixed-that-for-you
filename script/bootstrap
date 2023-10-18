@@ -9,17 +9,27 @@ cd "$(dirname "$0")/.."
 
 echo "=> Starting script/bootstrap"
 
+# Install pipx
 if ! command -v -- "pipx" > /dev/null 2>&1; then
   echo -e "\n==> Installing pipx..."
-  python3 -m pip install --user pipx
+
+  if [[ "$ENVIRONMENT" = development ]]; then
+    python3 -m pip install --user pipx
+  else
+    python3 -m pip install pipx
+  fi
+
   python3 -m pipx ensurepath
+  source $HOME/.profile
 fi
 
 # Install poetry if it's not installed already
 if ! command -v -- "poetry" > /dev/null 2>&1; then
   echo -e "\n==> Installing Poetry..."
   pipx install poetry==1.5.1
-  poetry completions bash >> ~/.bash_completion
+  if [[ "$ENVIRONMENT" = development ]]; then
+    poetry completions bash >> ~/.bash_completion
+  fi
 fi
 
 echo -e "\n==> Installing Python dependencies..."

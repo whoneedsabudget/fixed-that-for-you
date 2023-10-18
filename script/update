@@ -6,7 +6,9 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-script/bootstrap
+if ! [[ "$ENVIRONMENT" = production ]]; then
+  script/bootstrap
+fi
 
 echo -e "\n=> Starting script/update"
 

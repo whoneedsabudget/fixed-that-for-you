@@ -4,6 +4,7 @@ version = "1.0.0"
 description = ""
 authors = ["synth3tk <dev@synth3.tk>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.scripts]
 main = "main:main"

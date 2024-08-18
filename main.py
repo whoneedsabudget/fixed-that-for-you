@@ -41,7 +41,7 @@ client = Client(
     activity=Activity(
         name="with social media links", type=ActivityType.PLAYING
     ),
-    intents=Intents.GUILDS | Intents.GUILD_MESSAGES,
+    intents=Intents.GUILDS | Intents.GUILD_MESSAGES | Intents.MESSAGE_CONTENT,
     debug_scope=MISSING,
     send_command_tracebacks=False
 )

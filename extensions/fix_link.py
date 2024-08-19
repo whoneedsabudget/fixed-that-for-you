@@ -1,6 +1,7 @@
 """
 Fix message links
 """
+import asyncio
 from typing import Union
 from interactions import (
     BrandColors,
@@ -17,7 +18,7 @@ from interactions import (
     slash_command,
     User
 )
-from interactions.api.events import MessageCreate, MessageUpdate
+from interactions.api.events import MessageCreate
 from src import logutil, linkparser
 
 logger = logutil.init_logger(__name__)
@@ -61,8 +62,9 @@ class FixLink(Extension):
 
   @listen(MessageCreate)
   async def on_message_create(self, event: MessageCreate):
-    a_bot = await self.is_a_bot(event.message.author)
-    if (not a_bot):
+    not_a_bot = not await self.is_a_bot(event.message.author)
+    if (not_a_bot):
+      await asyncio.sleep(1) # This is required because the original embed isn't always instantly available
       message: Message = event.message
       # If there are embeds in the original message try to fix the links
       if len(message.embeds) > 0:
@@ -74,25 +76,6 @@ class FixLink(Extension):
           await message.reply(
             content=new_links_list,
             silent=True
-          )
-          return
-
-  # While this covers adding links to an existing message, it turns out when a user
-  # posts a link to Discord whose embed isn't cached, the rest of the message posts
-  # first with the embed edited in once it's ready. So this also solves that case.
-  @listen(MessageUpdate)
-  async def on_message_update(self, event: MessageUpdate):
-    a_bot = await self.is_a_bot(event.before.author)
-    if (not a_bot):
-      if (len(event.before.embeds) == 0 and len(event.after.embeds) > 0):
-        new_links = await self.get_new_links(event.after.embeds)
-        new_links_list = "\n".join([i for i in new_links])
-
-        # If any links were fixed, return them in a new message
-        if len(new_links_list) > 0:
-          await event.after.reply(
-            content=new_links_list,
-            silent=True,
           )
           return
 

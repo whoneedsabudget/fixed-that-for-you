@@ -68,13 +68,31 @@ class FixLink(Extension):
       if len(message.embeds) > 0:
         new_links = await self.get_new_links(message.embeds)
         new_links_list = "\n".join([i for i in new_links])
-        logger.debug(new_links_list)
 
         # If any links were fixed, return them in a new message
         if len(new_links_list) > 0:
           await message.reply(
             content=new_links_list,
             silent=True
+          )
+          return
+
+  # While this covers adding links to an existing message, it turns out when a user
+  # posts a link to Discord whose embed isn't cached, the rest of the message posts
+  # first with the embed edited in once it's ready. So this also solves that case.
+  @listen(MessageUpdate)
+  async def on_message_update(self, event: MessageUpdate):
+    a_bot = await self.is_a_bot(event.before.author)
+    if (not a_bot):
+      if (len(event.before.embeds) == 0 and len(event.after.embeds) > 0):
+        new_links = await self.get_new_links(event.after.embeds)
+        new_links_list = "\n".join([i for i in new_links])
+
+        # If any links were fixed, return them in a new message
+        if len(new_links_list) > 0:
+          await event.after.reply(
+            content=new_links_list,
+            silent=True,
           )
           return
 

@@ -64,7 +64,7 @@ class FixLink(Extension):
   async def on_message_create(self, event: MessageCreate):
     not_a_bot = not await self.is_a_bot(event.message.author)
     if (not_a_bot):
-      await asyncio.sleep(1) # This is required because the original embed isn't always instantly available
+      await asyncio.sleep(2) # This is required because the original embed isn't always instantly available
       message: Message = event.message
       # If there are embeds in the original message try to fix the links
       if len(message.embeds) > 0:

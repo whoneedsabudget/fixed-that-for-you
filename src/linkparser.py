@@ -58,7 +58,10 @@ class LinkParser():
     if domainInfo['type'] == 'social':
       return self.replace_social(domainInfo)
     elif domainInfo['type'] == 'news':
-      return self.replace_news()
+      if 'unlocked_article_code' in self.url:
+        return None
+      else:
+        return self.replace_news()
 
     return None
 

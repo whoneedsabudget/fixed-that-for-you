@@ -42,7 +42,6 @@ client = Client(
         name="with social media links", type=ActivityType.PLAYING
     ),
     intents=Intents.DEFAULT | Intents.GUILDS | Intents.GUILD_MESSAGES | Intents.MESSAGE_CONTENT,
-    sync_interactions=True,
     debug_scope=MISSING,
     send_command_tracebacks=False,
     logger=logger

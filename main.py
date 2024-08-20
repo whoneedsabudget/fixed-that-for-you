@@ -41,9 +41,11 @@ client = Client(
     activity=Activity(
         name="with social media links", type=ActivityType.PLAYING
     ),
-    intents=Intents.GUILDS | Intents.GUILD_MESSAGES | Intents.MESSAGE_CONTENT,
+    intents=Intents.DEFAULT | Intents.GUILDS | Intents.GUILD_MESSAGES | Intents.MESSAGE_CONTENT,
+    sync_interactions=True,
     debug_scope=MISSING,
-    send_command_tracebacks=False
+    send_command_tracebacks=False,
+    logger=logger
 )
 
 # Enable hot-reload and traceback printing if debug is enabled

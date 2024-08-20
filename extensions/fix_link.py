@@ -14,6 +14,7 @@ from interactions import (
     listen,
     Member,
     Message,
+    MessageFlags,
     message_context_menu,
     slash_command,
     User
@@ -73,9 +74,10 @@ class FixLink(Extension):
 
         # If any links were fixed, return them in a new message
         if len(new_links_list) > 0:
-          await message.reply(
+          await message.channel.send(
             content=new_links_list,
-            silent=True
+            silent=True,
+            flags=MessageFlags.SILENT
           )
           return
 

@@ -39,7 +39,7 @@ class LinkParser():
     },
     'x.com': {
       'type': 'social',
-      'replacement': 'vxtwitter.com'
+      'replacement': 'girlcockx.com'
     }
   }
   

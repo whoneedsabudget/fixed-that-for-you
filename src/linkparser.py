@@ -40,6 +40,24 @@ class LinkParser():
     'x.com': {
       'type': 'social',
       'replacement': 'vxtwitter.com'
+    },
+    'expressnews.com': {
+      'type': 'news'
+    },
+    'newsweek.com': {
+      'type': 'news'
+    },
+    'forbes.com': {
+      'type': 'news'
+    },
+    'haaretz.com': {
+      'type': 'news'
+    },
+    'latimes.com': {
+      'type': 'news'
+    },
+    'houstonchronicle.com': {
+      'type': 'news'
     }
   }
   

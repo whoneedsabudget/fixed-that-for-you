@@ -2,10 +2,10 @@ import tldextract
 
 class LinkParser():
   __valid_domains = {
-     'bsky.app': {
-       'type': 'social',
-       'replacement': 'bskyx.app'
-     },
+     #'bsky.app': {
+     #  'type': 'social',
+     #  'replacement': 'bskyx.app'
+     #},
     'instagram.com': {
       'type': 'social',
       'replacement': 'ddinstagram.com'
@@ -14,6 +14,9 @@ class LinkParser():
       'type': 'news'
     },
     'nytimes.com': {
+      'type': 'news'
+    },
+    'apple.news': {
       'type': 'news'
     },
     'theatlantic.com': {

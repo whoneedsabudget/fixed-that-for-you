@@ -17,7 +17,7 @@ class LinkParser():
       'type': 'news'
     },
     'apple.news': {
-      'type': 'news'
+      'type': 'apple'
     },
     'theatlantic.com': {
       'type': 'news'
@@ -78,6 +78,8 @@ class LinkParser():
     # Execute the relevant replacement function and return
     if domainInfo['type'] == 'social':
       return self.replace_social(domainInfo)
+    elif domainInfo['type'] == 'apple':
+      return self.replace_apple()
     elif domainInfo['type'] == 'news':
       if 'unlocked_article_code' in self.url:
         return None
@@ -95,4 +97,9 @@ class LinkParser():
   def replace_news(self):
     '''News link replacement'''
     new_url = f'https://archive.today/newest/{self.url}'
+    return new_url
+
+  def replace_apple(self):
+    '''News link replacement'''
+    new_url = f'https://archive.today/?url={self.url}'
     return new_url

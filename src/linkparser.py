@@ -61,6 +61,9 @@ class LinkParser():
     },
     'houstonchronicle.com': {
       'type': 'news'
+    },
+    'stltoday.com': {
+      'type': 'news'
     }
   }
   

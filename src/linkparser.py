@@ -17,7 +17,7 @@ class LinkParser():
       'type': 'news'
     },
     'apple.news': {
-      'type': 'news'
+      'type': 'custom'
     },
     'theatlantic.com': {
       'type': 'news'
@@ -86,6 +86,14 @@ class LinkParser():
         return None
       else:
         return self.replace_news()
+    elif domainInfo['type'] == 'custom':
+      '''Load module based on domain name of source in TitleCase'''
+      from re import sub
+
+      module_name = sub(r"(\.)+", " ", self.extracted_url.registered_domain).title().replace(" ", "").replace("*","")
+      custom_module = getattr(__import__('src', fromlist=[module_name]), module_name)
+
+      return custom_module.replace_custom(url=self.url)
 
     return None
 

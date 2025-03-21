@@ -10,12 +10,13 @@ package-mode = false
 main = "main:main"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-discord-py-interactions = "5.0.0"
-discord-typings = "0.5.1"
-python-dotenv = "0.19.1"
+python = "^3.13"
+discord-py-interactions = "^5.14.0"
+discord-typings = "^0.9"
+python-dotenv = "^0.19.1"
 requests = "^2.31.0"
 tldextract = "^3.4.4"
+beautifulsoup4 = "^4.13.3"
 
 [tool.poetry.group.dev]
 optional = true

@@ -11,9 +11,9 @@ main = "main:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-discord-py-interactions = "5.0.0"
-discord-typings = "0.5.1"
-python-dotenv = "0.19.1"
+discord-py-interactions = "^5.0.0"
+discord-typings = "^0.5.1"
+python-dotenv = "^0.19.1"
 requests = "^2.31.0"
 tldextract = "^3.4.4"
 

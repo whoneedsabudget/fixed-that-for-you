@@ -16,13 +16,19 @@ discord-typings = "0.5.1"
 python-dotenv = "0.19.1"
 requests = "^2.31.0"
 tldextract = "^3.4.4"
+aiohttp = ">=3.9.0"
 
 [tool.poetry.group.dev]
 optional = true
 
 [tool.poetry.group.dev.dependencies]
 jurigged = "^0.5.5"
+flake8-pyproject = "^1.2.3"
 
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "E231"]
+exclude = [".git", "__pycache__", "build", "dist"]
 
 [build-system]
 requires = ["poetry-core"]

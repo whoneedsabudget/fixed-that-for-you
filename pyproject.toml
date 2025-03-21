@@ -16,6 +16,7 @@ discord-typings = "^0.9"
 python-dotenv = "^0.19.1"
 requests = "^2.31.0"
 tldextract = "^3.4.4"
+beautifulsoup4 = "^4.13.3"
 
 [tool.poetry.group.dev]
 optional = true

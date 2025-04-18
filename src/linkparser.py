@@ -22,10 +22,10 @@ class LinkParser():
     'theatlantic.com': {
       'type': 'news'
     },
-    'threads.net': {
-      'type': 'social',
-      'replacement': 'vxthreads.net'
-    },
+    # 'threads.net': {
+    #   'type': 'social',
+    #   'replacement': 'vxthreads.net'
+    # },
     'tiktok.com': {
       'type': 'social',
       'replacement': 'vxtiktok.com'

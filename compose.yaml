@@ -1,0 +1,20 @@
+services:
+  bot:
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=development
+    env_file: .env
+    stdin_open: true
+    tty: true
+    develop:
+      watch:
+        - action: sync
+          path: ./extensions
+          target: /app/extensions
+        - action: sync
+          path: ./main.py
+          target: /app/main.py
+        - action: sync
+          path: ./src
+          target: /app/src

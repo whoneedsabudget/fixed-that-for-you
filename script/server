@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source ~/.profile
 
 # script/server: Launch the application and any extra required processes
 #                locally.
@@ -15,10 +16,6 @@ echo -e "\n=> Starting script/server"
 
 test -z "$ENVIRONMENT" &&
   ENVIRONMENT='development'
-
-if ! [[ "$ENVIRONMENT" = development ]]; then
-  pipx ensurepath --force && source $HOME/.profile
-fi
 
 echo -e "\n=> Starting the Fixed That For You bot..." &
 poetry run python main.py

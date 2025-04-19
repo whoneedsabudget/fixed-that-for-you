@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source $HOME/.profile
 
 # script/bootstrap: Resolve all dependencies that the application requires to
 #                   run.
@@ -17,8 +18,6 @@ if ! command -v -- "pipx" > /dev/null 2>&1; then
     python3 -m pip install --user pipx
   fi
 fi
-
-pipx ensurepath && source $HOME/.profile
 
 # Install poetry if it's not installed already
 if ! command -v -- "poetry" > /dev/null 2>&1; then

@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y python3.13 pyth
 WORKDIR /app
 COPY . /app
 
+RUN pipx ensurepath > /dev/null
 RUN script/bootstrap
 
 # Runtime stage
@@ -39,4 +40,5 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 
 # Run it
+RUN pipx ensurepath > /dev/null
 CMD ["script/server"]

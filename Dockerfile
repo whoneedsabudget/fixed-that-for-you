@@ -17,6 +17,7 @@ WORKDIR /app
 COPY . /app
 
 RUN script/bootstrap
+RUN rm -f /root/.local/state/pipx/log/*.log
 
 # Runtime stage
 FROM ubuntu:24.10 AS runtime

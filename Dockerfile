@@ -31,8 +31,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y python3.13 pyth
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy binaries and app code from builder image
-COPY --from=builder /root/.local/share/pipx/venvs /root/.local/share/pipx/venvs
-COPY --from=builder /root/.local/bin /root/.local/bin
+COPY --from=builder /root/.local /root/.local
 COPY --from=builder /app /app
 WORKDIR /app
 

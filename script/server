@@ -17,7 +17,7 @@ test -z "$ENVIRONMENT" &&
   ENVIRONMENT='development'
 
 if ! [[ "$ENVIRONMENT" = development ]]; then
-  pipx ensurepath > /dev/null 2>&1 && source $HOME/.profile
+  pipx ensurepath && source $HOME/.profile
 fi
 
 echo -e "\n=> Starting the Fixed That For You bot..." &

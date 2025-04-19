@@ -15,18 +15,16 @@ if ! command -v -- "pipx" > /dev/null 2>&1; then
 
   if [[ "$ENVIRONMENT" = development ]]; then
     python3 -m pip install --user pipx
-  else
-    python3 -m pip install pipx
   fi
-
-  python3 -m pipx ensurepath
-  source $HOME/.profile
 fi
+
+pipx ensurepath && source $HOME/.profile
 
 # Install poetry if it's not installed already
 if ! command -v -- "poetry" > /dev/null 2>&1; then
   echo -e "\n==> Installing Poetry..."
-  pipx install poetry==1.8.3
+  pipx install poetry==2.1.2
+
   if [[ "$ENVIRONMENT" = development ]]; then
     poetry completions bash >> ~/.bash_completion
   fi

@@ -1,33 +1,38 @@
 # Build stage
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:24.10 AS builder
 
 # Avoid stuck build due to user prompt
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install updates and Python
-RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3.10-dev python3.10-venv python3-pip python3-wheel build-essential && \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+RUN add-apt-repository "deb https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble main"
+RUN apt-get update && apt-get install --no-install-recommends -y python3.13 python3.13-dev python3.13-venv python3-pip python3-wheel pipx build-essential && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install requirements
-ENV PIPX_HOME=/opt/pipx
-ENV PIPX_BIN_DIR=/usr/local/bin
-
 WORKDIR /app
 COPY . /app
 
-RUN script/bootstrap && rm -rf ~/.cache/pip
+RUN script/bootstrap
 
 # Runtime stage
-FROM ubuntu:22.04 AS runtime
+FROM ubuntu:24.10 AS runtime
 ENV ENVIRONMENT=production
 
 # Install updates and Python
-RUN apt-get update && apt-get install --no-install-recommends -y python3.10 python3-venv && \
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    rm -rf /var/lib/apt/lists/*
+RUN add-apt-repository "deb https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble main"
+RUN apt-get update && apt-get install --no-install-recommends -y python3.13 python3-venv pipx && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy binaries and app code from builder image
-COPY --from=builder /opt/pipx /opt/pipx
-COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=builder /root/.local/share/pipx/venvs /root/.local/share/pipx/venvs
+COPY --from=builder /root/.local/bin /root/.local/bin
 COPY --from=builder /app /app
 WORKDIR /app
 

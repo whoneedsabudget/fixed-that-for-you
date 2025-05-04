@@ -1,44 +1,35 @@
+ARG ENVIRONMENT="production"
+
 # Build stage
-FROM ubuntu:24.10 AS builder
-
-# Avoid stuck build due to user prompt
-ARG DEBIAN_FRONTEND=noninteractive
-
-# Install updates and Python
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    rm -rf /var/lib/apt/lists/*
-RUN add-apt-repository "deb https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble main"
-RUN apt-get update && apt-get install --no-install-recommends -y python3.13 python3.13-dev python3.13-venv python3-pip python3-wheel pipx build-essential && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+FROM python:3.13-bullseye AS builder
+ARG ENVIRONMENT
+ENV ENVIRONMENT=$ENVIRONMENT
 
 # Install requirements
-WORKDIR /app
-COPY . /app
+RUN pip install poetry==2.1.2
 
-RUN pipx ensurepath > /dev/null
-RUN script/bootstrap
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VIRTUALENVS_CREATE=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache
+
+WORKDIR /app
+
+COPY poetry.lock pyproject.toml ./
+
+RUN --mount=type=cache,target=$POETRY_CACHE_DIR [ $ENVIRONMENT = development ] && poetry install --with dev || poetry install
 
 # Runtime stage
-FROM ubuntu:24.10 AS runtime
-ENV ENVIRONMENT=production
+FROM python:3.13-slim-bullseye AS runtime
+ARG ENVIRONMENT
+ENV ENVIRONMENT=$ENVIRONMENT
 
-# Install updates and Python
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    rm -rf /var/lib/apt/lists/*
-RUN add-apt-repository "deb https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble main"
-RUN apt-get update && apt-get install --no-install-recommends -y python3.13 python3-venv pipx && \
-  apt-get clean && rm -rf /var/lib/apt/lists/*
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
 
-# Copy binaries and app code from builder image
-COPY --from=builder /root/.local /root/.local
-COPY --from=builder /app /app
+COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+
 WORKDIR /app
+COPY . ./
 
-# Make sure all messages always reach console
-ENV PYTHONUNBUFFERED=1
-
-# Run it
-RUN pipx ensurepath > /dev/null
 CMD ["script/server"]

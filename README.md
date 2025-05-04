@@ -12,7 +12,7 @@ Because social media links are stupid.
     ```
 4. Build the Docker image
     ```bash
-    ddocker compose build
+    docker compose build
     ```
 5. Run the container
     ```bash

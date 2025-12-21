@@ -8,7 +8,7 @@ class LinkParser():
      #},
     'instagram.com': {
       'type': 'social',
-      'replacement': 'ddinstagram.com'
+      'replacement': 'zzinstagram.com'
     },
     'bloomberg.com': {
       'type': 'news'

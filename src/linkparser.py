@@ -28,7 +28,7 @@ class LinkParser():
     # },
     'tiktok.com': {
       'type': 'social',
-      'replacement': 'vxtiktok.com'
+      'replacement': 'tnktok.com'
     },
     'twitter.com': {
       'type': 'social',

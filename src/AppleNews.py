@@ -11,6 +11,6 @@ def replace_custom(url):
 
   embedded_article_url = html_soup.find_all('span', class_="click-here")[0].parent.get('href')
 
-  return f'https://archive.today/newest/{embedded_article_url}'
+  return f'{embedded_article_url}'
   
 

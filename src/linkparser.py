@@ -19,6 +19,9 @@ class LinkParser():
     'apple.news': {
       'type': 'custom'
     },
+    'stocks.apple.com': {
+      'type': 'custom'
+    },
     'theatlantic.com': {
       'type': 'news'
     },

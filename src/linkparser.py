@@ -19,7 +19,7 @@ class LinkParser():
     'apple.news': {
       'type': 'custom'
     },
-      'stocks.apple.com': {
+    'stocks.apple.com': {
       'type': 'custom'
     },
     'theatlantic.com': {
@@ -75,10 +75,14 @@ class LinkParser():
     self.extracted_url = tldextract.extract(url)
 
   def fix(self):
+    # Set the domain to either the registered domain or the fqdn, depending on if they are the same or not
+    registered = self.extracted_url.registered_domain
+    fqdn = self.extracted_url.fqdn
+    domain = registered if registered == fqdn else fqdn
+
     # Check if it's a valid domain
-    try:
-      domainInfo = self.__valid_domains[self.extracted_url.registered_domain]
-    except Exception:
+    domainInfo = self.__valid_domains.get(domain)
+    if not domainInfo:
       return None
 
     # Execute the relevant replacement function and return
@@ -93,14 +97,14 @@ class LinkParser():
       '''Load module based on domain name of source in TitleCase'''
       from re import sub
 
-      module_name = sub(r"(\.)+", " ", self.extracted_url.registered_domain).title().replace(" ", "").replace("*","")
+      module_name = sub(r"(\.)+", " ", domain).title().replace(" ", "").replace("*","")
       custom_module = getattr(__import__('src', fromlist=[module_name]), module_name)
 
       return custom_module.replace_custom(url=self.url)
 
     return None
 
-  def replace_social(self, domainInfo: object):
+  def replace_social(self, domainInfo):
     '''Social media link replacement'''
     fqdn = self.extracted_url.fqdn
     new_url = self.url.replace(fqdn, domainInfo['replacement'])
